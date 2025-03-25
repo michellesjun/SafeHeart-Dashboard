@@ -219,5 +219,7 @@ def update_prediction_and_plots(n_clicks, sex, age, weight, height, bmi, diabete
 
     return prediction_output, overall_fig, sex_fig, {"display": "block"}, {"display": "block"}
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    import os
+    port = int(os.environ.get("PORT", 8050))
+    app.run(debug=False, host="0.0.0.0", port=port)
