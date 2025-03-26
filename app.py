@@ -5,12 +5,15 @@ from dash.dependencies import Input, Output, State
 from predict import predict_heart_disease 
 import plotly.express as px
 import pandas as pd
+from functools import lru_cache
 
 app = dash.Dash(__name__)
 app.title = "SafeHeart"
 server = app.server
 
-df = pd.read_csv('CVD_cleaned_v2.csv')
+@lru_cache(maxsize=1)
+def load_data():
+    return pd.read_csv('CVD_cleaned_v2.csv')
 
 # Dropdown options
 sex_options = ['Male', 'Female']
@@ -37,7 +40,7 @@ app.layout = html.Div([
 
                 html.Div([
                     html.Label("Age Category:"),
-                    dcc.Dropdown(sorted(df['Age_Category'].unique()), id="age", placeholder="Select...")
+                    dcc.Dropdown(sorted(load_data()['Age_Category'].unique()), id="age", placeholder="Select...")
                 ]),
 
                 html.Div([
@@ -89,19 +92,19 @@ app.layout = html.Div([
             html.Br(),
             html.Div([
                 html.H3("Heart Disease Counts by Sex"),
-                dcc.Graph(figure=px.histogram(df, x='Sex', color='Heart_Disease', barmode='group')),
+                dcc.Graph(figure=px.histogram(load_data(), x='Sex', color='Heart_Disease', barmode='group')),
 
                 html.H3("BMI Distribution"),
-                dcc.Graph(figure=px.histogram(df, x='BMI', nbins=40)),
+                dcc.Graph(figure=px.histogram(load_data(), x='BMI', nbins=40)),
 
                 html.H3("Age Category Distribution"),
-                dcc.Graph(figure=px.histogram(df, x='Age_Category', category_orders={"Age_Category": age_order})),
+                dcc.Graph(figure=px.histogram(load_data(), x='Age_Category', category_orders={"Age_Category": age_order})),
 
                 html.H3("BMI vs Age Category colored by Diabetes"),
-                dcc.Graph(figure=px.box(df, x='Age_Category', y='BMI', color='Diabetes', category_orders={"Age_Category": age_order})),
+                dcc.Graph(figure=px.box(load_data(), x='Age_Category', y='BMI', color='Diabetes', category_orders={"Age_Category": age_order})),
 
                 html.H3("BMI vs Age Category colored by Arthritis"),
-                dcc.Graph(figure=px.box(df, x='Age_Category', y='BMI', color='Arthritis', category_orders={"Age_Category": age_order})),
+                dcc.Graph(figure=px.box(load_data(), x='Age_Category', y='BMI', color='Arthritis', category_orders={"Age_Category": age_order})),
             ], style={"width": "90%", "margin": "auto"})
         ])
     ])
@@ -152,28 +155,13 @@ def update_prediction_and_plots(n_clicks, sex, age, weight, height, bmi, diabete
     ])
 
     # Create visualizations
-    display_df = df.copy()
+    display_df = load_data().copy()
     display_df["Heart_Disease_Label"] = display_df["Heart_Disease"].map({0: "No Heart Disease", 1: "Heart Disease"})
 
     color_map = {
         "Heart Disease": "red",
         "No Heart Disease": "blue"
     }
-    # Overall plot
-    # overall_fig = px.scatter(
-    #     display_df,
-    #     x="BMI",
-    #     y="Age_Category",
-    #     height=800,
-    #     width=2000,
-    #     color="Heart_Disease_Label",
-    #     color_discrete_map={"Heart Disease": "red", "No Heart Disease": "blue"},
-    #     category_orders={"Age_Category": age_order},
-    #     title="BMI vs Age Category",
-    #     opacity=0.2,
-    #     size_max=8,
-    #     render_mode="webgl"
-    # )
     overall_fig = px.scatter(
         display_df,
         x="BMI",
