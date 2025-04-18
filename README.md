@@ -29,7 +29,8 @@ This tab in the dashboard allows the user to view the general trends of the data
 2. In the project folder, run `pip install -r requirements.txt`
 3. To launch the dashboard, run `python3 app.py` and you should see something like this pop up <br />
    <img width="283" alt="image" src="https://github.com/user-attachments/assets/01fd28e7-93eb-48b3-877d-6cabf8d30d0c" />
-   This means that the Dash server has started locally
+
+    This means that the Dash server has started locally
 6. Copy and paste the url into Chrome, Firefox, or Safari
 7. You should now be able to view and interact with the dashboard!!
 
