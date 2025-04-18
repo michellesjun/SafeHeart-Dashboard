@@ -1,5 +1,10 @@
 # SafeHeart-Dashboard
 
+## Description
+SafeHeart is an interactive web-based application designed to predict an individual’s risk of developing cardiovascular disease (CVD) using a machine learning approach. Unlike traditional risk assessment models that rely on a limited set of linear features, SafeHeart employs a Random Forest classifier capable of capturing nonlinear interactions between various lifestyle, behavioral, and physiological factors.
+
+The system is built using Python and Dash, providing a user-friendly interface where individuals can input personal health metrics and instantly receive risk feedback. Additionally, SafeHeart includes dynamic data visualizations that help users explore trends across the dataset, such as how age, sex, and BMI correlate with health conditions like diabetes or arthritis.
+
 <img width="1166" alt="image" src="https://github.com/user-attachments/assets/e0cee577-31c0-4100-9288-ae25448244c1" />
 
 ## Dashboard Features
@@ -18,12 +23,13 @@ This tab in the dashboard allows the user to view the general trends of the data
 <img width="884" alt="image" src="https://github.com/user-attachments/assets/ae920cf7-bd81-4fbf-9772-aa09c5279582" />
 <img width="1323" alt="image" src="https://github.com/user-attachments/assets/41b6dbe9-bc7d-451b-bcc5-3a056d624ed5" />
 
-## Installing and viewing the dashboard
-** Not required but it is best to set up a virtual environment
+## Installation and Execution
+*Not required but it is best to set up a virtual environment*
 1. Clone this git repository onto your local computer
 2. In the project folder, run `pip install -r requirements.txt`
-3. Run `python3 app.py` and you should see something like this pop up <br />
+3. To launch the dashboard, run `python3 app.py` and you should see something like this pop up <br />
    <img width="283" alt="image" src="https://github.com/user-attachments/assets/01fd28e7-93eb-48b3-877d-6cabf8d30d0c" />
+   This means that the Dash server has started locally
 6. Copy and paste the url into Chrome, Firefox, or Safari
 7. You should now be able to view and interact with the dashboard!!
 
